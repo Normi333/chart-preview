@@ -90,14 +90,13 @@ const ChartPreviewPie = ({
   };
 
   return (
-    <div className="barchart-container" style={{ height: 400 }}>
-      {loading ? (
-        <Skeleton height={400} />
-      ) : (
+    <div className="barchart-container">
+      {loading && <Skeleton height={400} />}
+      {!loading && (
         <>
-          <Pie data={data} options={options} />
+          <Pie data={data} options={options} height={400} />
           <ChartLegend
-            labels={labels}
+            labels={data.labels}
             colors={colors}
             hoveredIndex={hoveredIndex}
           />

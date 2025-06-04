@@ -241,10 +241,23 @@ const ChartPreview = ({
   };
 
   return (
+    // <div className="barchart-container">
+    //   {loading ? (
+    //     <Skeleton height={400} />
+    //   ) : (
+    //     <>
+    //       <Bar data={data} options={options} height={400} />
+    //       <ChartLegend
+    //         labels={data.labels}
+    //         colors={colors}
+    //         hoveredIndex={hoveredIndex}
+    //       />
+    //     </>
+    //   )}
+    // </div>
     <div className="barchart-container">
-      {loading ? (
-        <Skeleton height={400} />
-      ) : (
+      {loading && <Skeleton height={400} />}
+      {!loading && (
         <>
           <Bar data={data} options={options} height={400} />
           <ChartLegend
