@@ -29,13 +29,13 @@ function App() {
           chartLabel="पेशा"
         />
       </ChartCard>
-      {/* <ChartCard title="पेशाको अनुसार घरधुरी"> */}
+      <ChartCard title="पेशाको अनुसार घरधुरी">
         <ChartPreviewPie
           labelKey="profession"
           valueKey="households"
           chartLabel="पेशा"
         />
-      {/* </ChartCard> */}
+      </ChartCard>
     </>
   );
 }

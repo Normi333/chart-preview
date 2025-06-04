@@ -3,6 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import "../../styles/PieChart.css";
 import ChartLegend from "../ChartLegend";
+import Skeleton from "../Skeleton";
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -21,19 +22,37 @@ const ChartPreviewPie = ({
 }) => {
   const [chartData, setChartData] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setChartData(staticNepaliData);
+    const fetchData = async () => {
+      setTimeout(() => {
+        setChartData(staticNepaliData);
+        setLoading(false);
+      }, 1500);
+    };
+
+    fetchData();
   }, []);
 
-  const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
+  const generateColors = (length) => {
+    return Array.from({ length }, (_, i) => {
+      const hue = (i * 137.508) % 360;
+      return `hsl(${hue}, 65%, 55%)`;
+    });
+  };
+
+  const colors = generateColors(chartData.length);
+  const labels = chartData.map((item) => item[labelKey]);
+  const values = chartData.map((item) => parseFloat(item[valueKey]));
+  // const colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
 
   const data = {
-    labels: chartData.map((item) => item[labelKey]),
+    labels,
     datasets: [
       {
         label: chartLabel,
-        data: chartData.map((item) => parseFloat(item[valueKey])),
+        data: values,
         backgroundColor: colors,
         borderColor: "#ffffff",
         borderWidth: 2,
@@ -43,7 +62,7 @@ const ChartPreviewPie = ({
 
   const options = {
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false, // ❗ Important to make it responsive and sharp
     plugins: {
       title: {
         display: true,
@@ -58,7 +77,7 @@ const ChartPreviewPie = ({
         },
       },
       legend: {
-        display: false, // use custom ChartLegend instead
+        display: false, // using custom legend
       },
     },
     onHover: (event, chartElements) => {
@@ -71,14 +90,18 @@ const ChartPreviewPie = ({
   };
 
   return (
-    <div className="barchart-container">
-      <Pie data={data} options={options} />
-      {chartData.length > 0 && (
-        <ChartLegend
-          labels={data.labels}
-          colors={colors}
-          hoveredIndex={hoveredIndex}
-        />
+    <div className="barchart-container" style={{ height: 400 }}>
+      {loading ? (
+        <Skeleton height={400} />
+      ) : (
+        <>
+          <Pie data={data} options={options} />
+          <ChartLegend
+            labels={labels}
+            colors={colors}
+            hoveredIndex={hoveredIndex}
+          />
+        </>
       )}
     </div>
   );

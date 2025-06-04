@@ -129,6 +129,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import "../../styles/ChartPreview.css";
 import ChartLegend from "../ChartLegend";
+import Skeleton from "../Skeleton"; // NEW: Import a basic skeleton component
 
 ChartJS.register(
   CategoryScale,
@@ -154,20 +155,25 @@ const ChartPreview = ({
 }) => {
   const [chartData, setChartData] = useState([]);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  //   const generateColors = (length) => {
-  //     return Array.from(
-  //       { length },
-  //       (_, i) => `hsl(${(i * 137.508) % 360}, 65%, 55%)`
-  //     );
-  //   };
+  const [loading, setLoading] = useState(true); // NEW
 
   useEffect(() => {
-    setChartData(staticNepaliData);
+    // Simulate API call delay
+    setTimeout(() => {
+      setChartData(staticNepaliData);
+      setLoading(false); // Set loading to false after data is set
+    }, 1500); // adjust as needed or replace with actual API
   }, []);
 
-  // const colors = generateColors(chartData.length);
-  const defaultColor = "rgb(31, 119, 180)";
+  const generateColors = (length) => {
+    return Array.from({ length }, (_, i) => {
+      const hue = (i * 137.508) % 360;
+      return `hsl(${hue}, 65%, 55%)`;
+    });
+  };
+
+  const colors = generateColors(chartData.length);
+  // const defaultColor = "rgb(31, 119, 180)";
 
   const data = {
     labels: chartData.map((item) => item[labelKey]),
@@ -175,8 +181,8 @@ const ChartPreview = ({
       {
         label: chartLabel,
         data: chartData.map((item) => parseFloat(item[valueKey])),
-        backgroundColor: defaultColor,
-        borderColor: defaultColor,
+        backgroundColor: colors,
+        borderColor: colors,
         borderWidth: 1,
       },
     ],
@@ -236,12 +242,18 @@ const ChartPreview = ({
 
   return (
     <div className="barchart-container">
-      <Bar data={data} options={options} height={400} />
-      <ChartLegend
-        labels={data.labels}
-        colors={defaultColor}
-        hoveredIndex={hoveredIndex}
-      />
+      {loading ? (
+        <Skeleton height={400} />
+      ) : (
+        <>
+          <Bar data={data} options={options} height={400} />
+          <ChartLegend
+            labels={data.labels}
+            colors={colors}
+            hoveredIndex={hoveredIndex}
+          />
+        </>
+      )}
     </div>
   );
 };
