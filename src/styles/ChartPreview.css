@@ -1,0 +1,21 @@
+/* .barchart-container {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+} */
+
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+} 
+.barchart-container {
+  position: relative;
+  height: 100%;
+}

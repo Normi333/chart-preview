@@ -1,0 +1,39 @@
+.chart-card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  margin: 1rem;
+}
+
+.chart-card-header {
+  background: linear-gradient(to right, #1e90ff, #00bfff);
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.chart-card-actions {
+  display: flex;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.chart-card-actions svg {
+  font-size: 1rem;
+  color: white;
+}
+
+.chart-card-body {
+  padding: 1rem;
+  height: 450px; /* Fixed height */
+  position: relative;
+}

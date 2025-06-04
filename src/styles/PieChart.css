@@ -1,0 +1,22 @@
+/* canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+} 
+.barchart-container {
+  position: relative;
+  height: 100%;
+} */
+.barchart-container {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
