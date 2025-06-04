@@ -1,1 +1,1 @@
-#chart-preview for various datas
+# chart-preview for various datas
